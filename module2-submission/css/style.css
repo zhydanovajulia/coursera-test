@@ -13,8 +13,8 @@ h1 {
   padding: 40px 10px 0px 10px;
 }
 
-#chicken, #beef, #sushi {
-  height: 150px;
+.section {
+  height: 160px;
   overflow: auto;
   position: relative;
   float: left;
@@ -22,24 +22,21 @@ h1 {
   background: #999999;
   margin: 15px;
 }
-#chicken .text {
-  padding-bottom: 10px;
-}
 
-#chicken .title_menu {
+.chicken {
   background: #cc9a99;
 }
 
-#beef .title_menu{
+.beef {
   background: #b34d48;
   color: white;
 }
 
-#sushi .title_menu{
+.sushi {
   background: #e2d19f;
 }
 
-.title_menu {
+.sushi, .beef, .chicken {
   position: absolute;
   right: 0;
   top: 0;
