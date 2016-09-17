@@ -16,7 +16,7 @@
         var amount = $scope.menu.split(',').filter(function(n){ return n != " " && n != "" }).length
         if (amount > 3 ) {
          $scope.message = "Too much!"
-        } else if (amount < 3 && amount > 0) {
+        } else if (amount <= 3 && amount > 0) {
           $scope.message = "Enjoy!"
         } else {
           $scope.message = "Please enter data first"
