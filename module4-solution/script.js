@@ -64,3 +64,51 @@ WARNING!!! WARNING!!!
     }
   }
 } )();
+
+function mergeSort(tab) {
+  var tab1 = tab.splice(tab.length/2);
+  console.log("splice: tab1 = " + tab1 + ", tab = " + tab);
+  if (tab.length + tab1.length > 2) { // end of recursion for leaves
+    tab1 = mergeSort(tab1);
+    console.log("tab1 = " + tab1);
+    tab = mergeSort(tab);
+    console.log("tab = " + tab);
+  }
+  if (tab.length < 1) {
+    tab = tab1;
+  } else if (tab1.length < 1) {
+    tab = tab
+  } else {
+    tab = merge(tab1, tab); // but we have to merge leaves and give it back up the recursion tree. On level 0 it means return whole sorted array and end mergeSort.
+  }
+  return tab;
+}
+
+function merge(tab1, tab2) {
+  var m = [];
+  var j = 0;
+  var k = 0;
+  for (var i = 0; i < tab1.length + tab2.length; i++) {
+    if (tab1.length < j + 1) {
+      m.push(tab2[k]);
+      k++;
+    }
+    else if (tab2.length < k + 1) {
+      m.push(tab1[j]);
+      j++;
+    }
+    else if (tab1[j] < tab2[k]) {
+      m.push(tab1[j]);
+      j++;
+    }
+    else {
+      m.push(tab2[k]);
+      k++;
+    }
+  }
+  console.log("merged: " + m);
+  return m;
+}
+
+var array = [0,9,2,1,8,7,3,4,5,6];
+mergeSort(array);
