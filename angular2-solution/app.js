@@ -1,37 +1,55 @@
 (function() {
   'use strict';
 
-  angular.module('LunchCheck', [])
-  .controller('LunchCheckController', LunchCheckController);
+  angular.module('ShoppingListCheckOff', [])
+  .controller("ToBuyController", ToBuyController)
+  .controller("AlreadyBoughtController", AlreadyBoughtController)
+  .service("ShoppingListCheckOffService", ShoppingListCheckOffService);
 
-  LunchCheckController.$inject = ['$scope'];
+  AlreadyBoughtController.$inject = ['ShoppingListCheckOffService'];
+  function AlreadyBoughtController(ShoppingListCheckOffService) {
+    this.boughtList = ShoppingListCheckOffService.getBoughtItems();
+    console.log(this.boughtList.length)
 
-  function LunchCheckController($scope) {
-    $scope.menu = ""
-    $scope.message = ""
-    // console.log($scope.message)
-    $scope.check = function() {
-      if ($scope.menu.length > 0) {
-        // console.log($scope.menu)
-        var amount = $scope.menu.split(',').filter(function(n){ return n != " " && n != "" }).length
-        if (amount > 3 ) {
-          $scope.message = "Too much!"
-          $scope.statusInput = "has-success"
-          $scope.statusText = "text-success"
-        } else if (amount <= 3 && amount > 0) {
-          $scope.message = "Enjoy!"
-          $scope.statusInput = "has-success"
-          $scope.statusText = "text-success"
-        } else {
-          $scope.message = "Please enter data first"
-          $scope.statusText = "text-danger"
-          $scope.statusInput = "has-error"
-        }
-      } else {
-        $scope.message = "Please enter data first"
-        $scope.statusText = "text-danger"
-        $scope.statusInput = "has-error"
-      }
+    this.isEmpty = function () {
+      return this.boughtList.length < 1
+    }
+  }
+
+  ToBuyController.$inject = ['ShoppingListCheckOffService'];
+  function ToBuyController(ShoppingListCheckOffService) {
+
+    this.list = ShoppingListCheckOffService.getToBuyItems();
+
+    this.buyItem = function (itemIndex) {
+      ShoppingListCheckOffService.buyItem(itemIndex);
+    }
+
+    this.isEmpty = function () {
+      return this.list.length < 1
+    }
+  }
+
+  function ShoppingListCheckOffService() {
+    var service = this;
+
+    var toBuyList = [
+      { name: "cookies", quantity: 10}, { name: "cookies1", quantity: 10},
+      { name: "cookies2", quantity: 10}];
+
+    var boughtList = [];
+
+    service.buyItem = function (itemIndex) {
+      boughtList.push(toBuyList[itemIndex]);
+      toBuyList.splice(itemIndex, 1);
+    };
+
+    service.getToBuyItems = function () {
+      return toBuyList;
+    };
+
+    service.getBoughtItems = function () {
+      return boughtList;
     }
   }
 
