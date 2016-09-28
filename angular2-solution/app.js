@@ -8,11 +8,11 @@
 
   AlreadyBoughtController.$inject = ['ShoppingListCheckOffService'];
   function AlreadyBoughtController(ShoppingListCheckOffService) {
-    this.boughtList = ShoppingListCheckOffService.getBoughtItems();
-    console.log(this.boughtList.length)
 
-    this.isEmpty = function () {
-      return this.boughtList.length < 1
+    this.list = ShoppingListCheckOffService.getBoughtItems();
+
+    this.isEmpty = function() {
+      return  ShoppingListCheckOffService.isEmpty(this.list);
     }
   }
 
@@ -25,8 +25,8 @@
       ShoppingListCheckOffService.buyItem(itemIndex);
     }
 
-    this.isEmpty = function () {
-      return this.list.length < 1
+    this.isEmpty = function() {
+      return  ShoppingListCheckOffService.isEmpty(this.list);
     }
   }
 
@@ -34,8 +34,11 @@
     var service = this;
 
     var toBuyList = [
-      { name: "cookies", quantity: 10}, { name: "cookies1", quantity: 10},
-      { name: "cookies2", quantity: 10}];
+      { name: "cookies", quantity: 10},
+      { name: "eggs", quantity: 10},
+      { name: "melon", quantity: 1},
+      { name: "onion", quantity: 5},
+      { name: "milk", quantity: 1}];
 
     var boughtList = [];
 
@@ -50,6 +53,10 @@
 
     service.getBoughtItems = function () {
       return boughtList;
+    }
+
+    service.isEmpty = function (list) {
+      return list.length < 1;
     }
   }
 
