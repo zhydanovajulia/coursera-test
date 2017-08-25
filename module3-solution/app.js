@@ -11,19 +11,25 @@ function FoundItemsDirective() {
   var ddo = {
     templateUrl: 'foundItems.html',
     scope: {
-      found: '<',
-      onRemove: '&'
-    }
+      found: '<found',
+      onRemove: '&remove'
+    },
+    controller: FoundItemsDirectiveController,
+    controllerAs: 'foundItems',
+    bindToController: true
   }
 
   return ddo;
 }
 
+function FoundItemsDirectiveController() {}
+
 NarrowItDownController.$inject = ['MenuSearchService'];
 function NarrowItDownController(MenuSearchService) {
   var controller = this;
 
-  controller.searchItem = "";
+  controller.searchItem;
+  controller.found;
 
   controller.search = function() {
     var promise = MenuSearchService.getMatchedMenuItems(controller.searchItem);
@@ -37,7 +43,7 @@ function NarrowItDownController(MenuSearchService) {
   }
 
   controller.remove = function (itemIndex) {
-    controller.found.slice(itemIndex, 1);
+    controller.found.splice(itemIndex, 1);
   };
 }
 
